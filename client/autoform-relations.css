@@ -1,3 +1,19 @@
 table.afRelations-table > tr > td {
     padding: 5px 5px 5px 0px;
 }
+
+table.afRelations-table > tr > th {
+    border-bottom: 1px solid gray;
+}
+
+table.afRelations-table > tr > td {
+    border-bottom: 1px solid gray;
+}
+
+.afr-minus {
+    color:red;
+}
+
+.afr-plus {
+    color:green;
+}

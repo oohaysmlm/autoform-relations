@@ -23,7 +23,7 @@ Meteor.methods({
 
                return global[sourceSettings.collectionName].find(selector, options).fetch();
            } else {
-               return global[sourceSettings.collectionName].find({}, options).fetch();
+               return [];
            }
        });
    }

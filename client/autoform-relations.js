@@ -75,7 +75,13 @@ Template.afRelations.events({
     }, 200),
     "click a.afRelations-add": function () {
         var currentRecords = Session.get("currentRecords");
-        currentRecords.push(this);
+        var self = this;
+        var exists  = _.some(currentRecords, function(record){
+            return (self._id == record._id);
+        });
+        if(!exists){
+            currentRecords.push(this);
+        }
         Session.set("currentRecords", currentRecords);
     },
     "click a.afRelations-rem": function () {

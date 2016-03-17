@@ -1,26 +1,5 @@
 <template name="afRelations">
-    {{#if getCurrentRecords}}
-        <table class="afRelations-table" data-schema-key="{{schemaKey}}" id="afRelations-{{schemaKey}}">
-            <tr>
-                <th></th>
-                <th>_id</th>
-                {{#each getFields}}
-                    <th>{{this}}</th>
-                {{/each}}
-            </tr>
 
-            {{#each getCurrentRecords}}
-                <tr>
-                    <td><a href="#" class="afRelations-rem">Del</a></td>
-                    <td class="idCell">{{_id}}</td>
-                    {{#each getFields}}
-                        <td>{{{getProp .. this}}}</td>
-                    {{/each}}
-                </tr>
-            {{/each}}
-
-        </table>
-    {{/if}}
     <label class="control-label">Search:&nbsp;</label><input type="text" id="searchBox"/>
     {{#if getResults}}
         <table class="afRelations-table">
@@ -32,12 +11,33 @@
             </tr>
             {{#each getResults}}
                 <tr>
-                    <td><a href="#" class="afRelations-add">Add</a></td>
+                    <td><a href="#" class="afRelations-add"><i class="fa afr-plus fa-plus"></i></a></td>
                     {{#each getFields}}
                        <td>{{{getProp .. this}}}</td>
                     {{/each}}
                 </tr>
             {{/each}}
+        </table>
+    {{/if}}
+    {{#if getCurrentRecords}}
+        <label class="control-label" style="padding-top:5px;">Selected Records:</label>
+        <table class="afRelations-table" data-schema-key="{{schemaKey}}" id="afRelations-{{schemaKey}}">
+            <tr>
+                <th></th>
+                {{#each getFields}}
+                    <th>{{this}}</th>
+                {{/each}}
+            </tr>
+
+            {{#each getCurrentRecords}}
+                <tr>
+                    <td><a href="#" class="afRelations-rem"><i class="fa afr-minus fa-minus"></i></a></td>
+                    {{#each getFields}}
+                        <td>{{{getProp .. this}}}</td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+
         </table>
     {{/if}}
 </template>
