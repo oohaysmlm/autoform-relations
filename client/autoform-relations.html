@@ -1,0 +1,43 @@
+<template name="afRelations">
+    {{#if getCurrentRecords}}
+        <table class="afRelations-table" data-schema-key="{{schemaKey}}" id="afRelations-{{schemaKey}}">
+            <tr>
+                <th></th>
+                <th>_id</th>
+                {{#each getFields}}
+                    <th>{{this}}</th>
+                {{/each}}
+            </tr>
+
+            {{#each getCurrentRecords}}
+                <tr>
+                    <td><a href="#" class="afRelations-rem">Del</a></td>
+                    <td class="idCell">{{_id}}</td>
+                    {{#each getFields}}
+                        <td>{{{getProp .. this}}}</td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+
+        </table>
+    {{/if}}
+    <label class="control-label">Search:&nbsp;</label><input type="text" id="searchBox"/>
+    {{#if getResults}}
+        <table class="afRelations-table">
+            <tr>
+                <th></th>
+                {{#each getFields}}
+                    <th>{{this}}</th>
+                {{/each}}
+            </tr>
+            {{#each getResults}}
+                <tr>
+                    <td><a href="#" class="afRelations-add">Add</a></td>
+                    {{#each getFields}}
+                       <td>{{{getProp .. this}}}</td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+        </table>
+    {{/if}}
+</template>
