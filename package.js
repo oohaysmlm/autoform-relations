@@ -1,8 +1,8 @@
 Package.describe({
   name: 'skehoe1989:autoform-relations',
-  version: '0.0.1',
+  version: '1.0.0',
   // Brief, one-line summary of the package.
-  summary: 'An easy input form for aldeed-autoform used to search for and store references to records from another collection.',
+  summary: 'A simple input form for aldeed-autoform used to search for and store references to records from another collection.',
   // URL to the Git repository containing the source code for this package.
   git: 'https://github.com/oohaysmlm/autoform-relations',
   // By default, Meteor will default to using README.md for documentation.
