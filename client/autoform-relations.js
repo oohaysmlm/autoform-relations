@@ -14,6 +14,8 @@ AutoForm.addInputType('relation', {
 });
 
 var AfSearchSource = {};
+var options = {};
+var fields = [];
 
 Template.afRelations.onCreated(function() {
     Session.set("afRelationsReady", false);
@@ -29,11 +31,14 @@ Template.afRelations.onCreated(function() {
 
     var self = this;
 
+    fields = self.data.atts.settings.fields;
+    options = self.data.atts.settings.options;
+
     Meteor.call('setupAfSearchSource', sourceSettings, function(error, result) {
         if (error) {
             console.log("Error setting up search source for afRelations:\n " + error);
         } else {
-            AfSearchSource = new SearchSource("af" + self.data.atts.settings.collection, self.data.atts.settings.fields, self.data.atts.settings.options);
+            AfSearchSource = new SearchSource("af" + self.data.atts.settings.collection, fields, options);
             Session.set("afRelationsReady", true);
         }
     });

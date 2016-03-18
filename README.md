@@ -1,7 +1,7 @@
 #autoform-relations#
 
 ###Description###
-Adds a custom input type called "relation" to the [Aldeed's meteor-autoform](https://github.com/aldeed/meteor-autoform) package for when we need to add a reference to a record (or records) in another collection. Includes an integration with [meteorhacks:searchsource](https://github.com/meteorhacks/search-source) to provide full text search capabilities.
+Adds a custom input type called "relation" to the [Aldeed's meteor-autoform](https://github.com/aldeed/meteor-autoform) package for when we need to add a reference to a document (or documents) in another collection. Includes an integration with [meteorhacks:searchsource](https://github.com/meteorhacks/search-source) to provide full text search capabilities.
 
 ###Usage###
 ```
@@ -49,6 +49,11 @@ CoursesSchema = new SimpleSchema({
 
 });
 ```
+
+### Settings Explained ###
+#####collection##### - The name of the collection you want to search/add document references from.
+#####fields##### - An array of field names from the collection specified that you want to search over.  Passes through to [meteorhacks:searchsource](https://github.com/meteorhacks/search-source)
+#####options##### - Options to be passed to [meteorhacks:searchsource](https://github.com/meteorhacks/search-source) that can enable search caching, local search, and paged results.
 
 Maintained by [BitTiger](http://bittiger.io)
 

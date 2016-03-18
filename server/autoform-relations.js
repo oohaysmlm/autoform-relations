@@ -2,8 +2,6 @@
  * Created by stevenkehoe on 3/16/16.
  */
 
-
-
 Meteor.methods({
    setupAfSearchSource: function(sourceSettings){
        function buildRegExp(searchText) {
