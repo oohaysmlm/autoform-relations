@@ -15,7 +15,7 @@ AutoForm.addInputType('relation', {
 
 var AfSearchSource = {};
 var options = {};
-var fields = [];
+var fields = ['_id'];
 
 Template.afRelations.onCreated(function() {
     Session.set("afRelationsReady", false);
@@ -31,8 +31,12 @@ Template.afRelations.onCreated(function() {
 
     var self = this;
 
-    fields = self.data.atts.settings.fields;
-    options = self.data.atts.settings.options;
+    if (self.data.atts.settings.fields) {
+        fields = self.data.atts.settings.fields;
+    }
+    if (self.data.atts.settings.options) {
+        options = self.data.atts.settings.options;
+    }
 
     Meteor.call('setupAfSearchSource', sourceSettings, function(error, result) {
         if (error) {
