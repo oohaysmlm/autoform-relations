@@ -14,10 +14,14 @@ Meteor.methods({
 
            if(searchText) {
                var regExp = buildRegExp(searchText);
-               var selector = {$or: [
-                   {title: regExp},
-                   {description: regExp}
-               ]};
+               var fieldArray = [];
+               _.each(sourceSettings.fields, function(field){
+                   var newSearchField = {};
+                   newSearchField[field] = regExp;
+                   fieldArray.push(newSearchField);
+               });
+
+               var selector = {$or: fieldArray};
 
                return global[sourceSettings.collectionName].find(selector, options).fetch();
            } else {

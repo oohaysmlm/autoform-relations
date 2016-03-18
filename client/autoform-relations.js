@@ -19,22 +19,20 @@ AutoForm.addInputType('relation', {
 });
 
 var AfSearchSources = {};
-var options = {};
-var fields = [];
 
 Template.afRelations.onCreated(function() {
+    var self = this;
+    var schemaKey = self.data.atts['data-schema-key'];
+    var options = {};
+    var fields = [];
+
     Session.set("afRelationsReady", false);
-    Session.set("currentRecords", []);
+    Session.set(schemaKey + "_currentRecords", []);
 
     if (Template.instance().data.value) {
         var currentRecords = window[this.data.atts.settings.collection].find({_id: {$in: Template.instance().data.value}}).fetch();
         Session.set("currentRecords", currentRecords);
     }
-    var sourceSettings = {};
-    sourceSettings.collectionName = this.data.atts.settings.collection;
-    sourceSettings.sourceName = "af" + this.data.atts.settings.collection;
-
-    var self = this;
 
     if (self.data.atts.settings.fields) {
         fields = self.data.atts.settings.fields;
@@ -43,12 +41,18 @@ Template.afRelations.onCreated(function() {
         options = self.data.atts.settings.options;
     }
 
+    var sourceSettings = {};
+    sourceSettings.collectionName = this.data.atts.settings.collection;
+    sourceSettings.sourceName = "af" + this.data.atts.settings.collection;
+    sourceSettings.fields = fields;
+
     Meteor.call('setupAfSearchSource', sourceSettings, function(error, result) {
         if (error) {
             console.log("Error setting up search source for afRelations:\n " + error);
         } else {
-            AfSearchSources[self.data.atts['data-schema-key']] = new SearchSource("af" + self.data.atts.settings.collection, fields, options);
-            Session.set("afRelationsReady", true);
+
+            AfSearchSources[schemaKey] = new SearchSource("af" + self.data.atts.settings.collection, fields, options);
+            Session.set(schemaKey + "_afRelationsReady", true);
         }
     });
 });
@@ -56,12 +60,12 @@ Template.afRelations.onCreated(function() {
 Template.afRelations.helpers({
     getResults: function() {
         var self = this;
-        if(Session.get('afRelationsReady')) {
-            return AfSearchSources[self.atts['data-schema-key']].getData({
+        var schemaKey = self.atts['data-schema-key'];
+        if(Session.get(schemaKey + '_afRelationsReady')) {
+            return AfSearchSources[schemaKey].getData({
                 transform: function (matchText, regExp) {
                     return matchText.replace(regExp, "<b>$&</b>")
-                },
-                sort: {createdAt: -1}
+                }
             });
         }
     },
@@ -79,7 +83,7 @@ Template.afRelations.helpers({
         return x;
     },
     getCurrentRecords: function() {
-        return Session.get("currentRecords");
+        return Session.get(this.atts['data-schema-key'] + "_currentRecords");
     }
 });
 
@@ -96,23 +100,26 @@ Template.afRelations.onRendered(function() {
 
 Template.afRelations.events({
     "click a.afRelations-add": function () {
-        var currentRecords = Session.get("currentRecords");
         var self = this;
+        var schemaKey = Template.instance().data.atts['data-schema-key'];
+        var currentRecords = Session.get(schemaKey + "_currentRecords");
         var exists  = _.some(currentRecords, function(record){
             return (self._id == record._id);
         });
         if(!exists){
             currentRecords.push(this);
         }
-        Session.set("currentRecords", currentRecords);
+
+        Session.set(schemaKey + "_currentRecords", currentRecords);
     },
     "click a.afRelations-rem": function () {
         var self = this;
-        var currentRecords = Session.get("currentRecords");
+        var schemaKey = Template.instance().data.atts['data-schema-key'];
+        var currentRecords = Session.get(schemaKey + "_currentRecords");
         var newRecords = _.reject(currentRecords, function(record) {
             return (self._id == record._id);
         });
-        Session.set("currentRecords", newRecords);
+        Session.set(schemaKey + "_currentRecords", newRecords);
     }
 });
 
