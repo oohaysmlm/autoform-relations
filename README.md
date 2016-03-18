@@ -51,9 +51,9 @@ CoursesSchema = new SimpleSchema({
 ```
 
 ### Settings Explained ###
-#####collection##### - The name of the collection you want to search/add document references from.
-#####fields##### - An array of field names from the collection specified that you want to search over.  Passes through to [meteorhacks:searchsource](https://github.com/meteorhacks/search-source)
-#####options##### - Options to be passed to [meteorhacks:searchsource](https://github.com/meteorhacks/search-source) that can enable search caching, local search, and paged results.
+- collection - The name of the collection you want to search/add document references from.
+- fields - An array of field names from the collection specified that you want to search over.  Passes through to [meteorhacks:searchsource](https://github.com/meteorhacks/search-source)
+- options - Options to be passed to [meteorhacks:searchsource](https://github.com/meteorhacks/search-source) that can enable search caching, local search, and paged results.
 
 Maintained by [BitTiger](http://bittiger.io)
 

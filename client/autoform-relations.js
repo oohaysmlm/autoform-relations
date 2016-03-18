@@ -15,7 +15,7 @@ AutoForm.addInputType('relation', {
 
 var AfSearchSource = {};
 var options = {};
-var fields = ['_id'];
+var fields = [];
 
 Template.afRelations.onCreated(function() {
     Session.set("afRelationsReady", false);
