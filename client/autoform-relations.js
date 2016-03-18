@@ -9,12 +9,9 @@ AutoForm.addInputType('relation', {
         var ids = _.map(currentRecords, function(record) {
             return record._id;
         });
-        if(ids.length == 1){
-            return ids[0]
-        }
-        else {
-            return ids;
-        }
+
+        return ids;
+
     }
 });
 
@@ -31,7 +28,7 @@ Template.afRelations.onCreated(function() {
 
     if (Template.instance().data.value) {
         var currentRecords = window[this.data.atts.settings.collection].find({_id: {$in: Template.instance().data.value}}).fetch();
-        Session.set("currentRecords", currentRecords);
+        Session.set(schemaKey + "_currentRecords", currentRecords);
     }
 
     if (self.data.atts.settings.fields) {
