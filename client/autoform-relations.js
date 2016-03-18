@@ -5,7 +5,7 @@
 AutoForm.addInputType('relation', {
     template: "afRelations",
     valueOut: function(){
-        var currentRecords = Session.get("currentRecords");
+        var currentRecords = Session.get(this.attr('data-schema-key') + "_currentRecords");
         var ids = _.map(currentRecords, function(record) {
             return record._id;
         });
