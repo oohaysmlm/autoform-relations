@@ -9,7 +9,12 @@ AutoForm.addInputType('relation', {
         var ids = _.map(currentRecords, function(record) {
             return record._id;
         });
-        return ids;
+        if(ids.length == 1){
+            return ids[0]
+        }
+        else {
+            return ids;
+        }
     }
 });
 
