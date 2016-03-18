@@ -1,6 +1,7 @@
 <template name="afRelations">
-
-    <label class="control-label">Search:&nbsp;</label><input type="text" id="searchBox_{{schemaKey}}"/>
+    <div class="form-group">
+        <input type="text" class="form-control" id="searchBox_{{schemaKey}}"/>
+    </div>
     {{#if getResults}}
         <table class="afRelations-table">
             <tr>
