@@ -13,7 +13,7 @@ AutoForm.addInputType('relation', {
     }
 });
 
-var AfSearchSource = {};
+var AfSearchSources = {};
 var options = {};
 var fields = [];
 
@@ -42,7 +42,7 @@ Template.afRelations.onCreated(function() {
         if (error) {
             console.log("Error setting up search source for afRelations:\n " + error);
         } else {
-            AfSearchSource = new SearchSource("af" + self.data.atts.settings.collection, fields, options);
+            AfSearchSources[self.data.atts['data-schema-key']] = new SearchSource("af" + self.data.atts.settings.collection, fields, options);
             Session.set("afRelationsReady", true);
         }
     });
@@ -50,8 +50,9 @@ Template.afRelations.onCreated(function() {
 
 Template.afRelations.helpers({
     getResults: function() {
+        var self = this;
         if(Session.get('afRelationsReady')) {
-            return AfSearchSource.getData({
+            return AfSearchSources[self.atts['data-schema-key']].getData({
                 transform: function (matchText, regExp) {
                     return matchText.replace(regExp, "<b>$&</b>")
                 },
@@ -60,7 +61,7 @@ Template.afRelations.helpers({
         }
     },
     isLoading: function() {
-        return AfSearchSource.getStatus().loading;
+        return AfSearchSources[this.atts['data-schema-key']].getStatus().loading;
     },
     schemaKey: function() {
         return this.atts['data-schema-key'];
@@ -77,11 +78,18 @@ Template.afRelations.helpers({
     }
 });
 
-Template.afRelations.events({
-    "keyup #searchBox": _.throttle(function(e) {
+
+// Have to use regular JQuery keyup function as you cannot compose a dynamic key in JSON using this.atts.name to handle
+// the situation where one for has multiple relationship search boxes
+Template.afRelations.onRendered(function() {
+    var schemaKey = Template.instance().data.atts['data-schema-key'];
+    $("#searchBox_" + schemaKey).keyup(_.throttle(function(e){
         var text = $(e.target).val().trim();
-        AfSearchSource.search(text, {});
-    }, 200),
+        AfSearchSources[schemaKey].search(text, {});
+    }, 200));
+});
+
+Template.afRelations.events({
     "click a.afRelations-add": function () {
         var currentRecords = Session.get("currentRecords");
         var self = this;
