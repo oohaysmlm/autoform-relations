@@ -10,6 +10,7 @@ meteor add skehoe1989:autoform-relations
 
 Add the 'relation' input type to the autoform property in your collection's SimpleSchema:
 
+![autoform-relations](https://raw.githubusercontent.com/oohaysmlm/autoform-relations/master/readme/autoform-relations.png)
 
 ```javascript
 CoursesSchema = new SimpleSchema({
@@ -52,4 +53,4 @@ CoursesSchema = new SimpleSchema({
 Maintained by [BitTiger](http://bittiger.io)
 
 
-![BitTiger Logo](https://raw.githubusercontent.com/oohaysmlm/autoform-tinymce/master/readme/small_logo.png)
+![BitTiger Logo](https://raw.githubusercontent.com/oohaysmlm/autoform-relations/master/readme/small_logo.png)
