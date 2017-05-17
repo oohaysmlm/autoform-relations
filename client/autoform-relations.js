@@ -31,8 +31,12 @@ Template.afRelations.onCreated(function() {
     Session.set(schemaKey + "_currentRecords", []);
 
     if (Template.instance().data.value) {
-        var currentRecords = window[this.data.atts.settings.collection].find({_id: {$in: Template.instance().data.value}}).fetch();
-        Session.set(schemaKey + "_currentRecords", currentRecords);
+        let collection = this.data.atts.settings.collection,
+            currRecords = [];
+        _.each(Template.instance().data.value, function(id) {
+            currRecords.push(window[collection].findOne(id));
+        });
+        Session.set(schemaKey + "_currentRecords", currRecords);
     }
 
     if (self.data.atts.settings.fields) {
